@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chinh Phục Vũ Trụ Tri Thức - Lớp 4 & 5</title>
+    <!-- Thêm Favicon Icon -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><defs><linearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'><stop offset='0%25' style='stop-color:%2338bdf8;stop-opacity:1'/><stop offset='100%25' style='stop-color:%23c084fc;stop-opacity:1'/></linearGradient></defs><circle cx='50' cy='50' r='48' fill='url(%23g)'/><path d='M50 20 L65 55 L35 55 Z' fill='white'/><rect x='45' y='55' width='10' height='20' fill='white'/><path d='M30 75 Q50 65 70 75' stroke='white' stroke-width='4' fill='none'/></svg>">
+    
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -74,6 +77,17 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Hiệu ứng hào quang cho Icon */
+        .icon-glow {
+            filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.6));
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
     </style>
 </head>
 <body class="h-screen flex items-center justify-center p-4">
@@ -87,12 +101,27 @@
             <div class="flex items-center gap-4">
                 <button id="back-home" class="hidden p-2 rounded-xl bg-white/5 hover:bg-white/10 text-blue-400 transition-colors" onclick="showHomeScreen()">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
                     </svg>
                 </button>
-                <div>
-                    <div class="font-orbitron text-blue-400 tracking-tighter font-bold text-xl">SPACE QUEST</div>
-                    <div class="text-[10px] text-blue-300/50 uppercase tracking-[0.2em]">Hệ thống thám hiểm</div>
+                <div class="flex items-center gap-2">
+                    <!-- Mini Logo in HUD -->
+                    <svg width="30" height="30" viewBox="0 0 100 100" class="icon-glow">
+                        <defs>
+                            <linearGradient id="hudG" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#c084fc;stop-opacity:1" />
+                            </linearGradient>
+                        </defs>
+                        <circle cx="50" cy="50" r="45" fill="url(#hudG)" />
+                        <path d="M50 25 L65 55 L35 55 Z" fill="white" />
+                        <rect x="46" y="55" width="8" height="15" fill="white" />
+                        <path d="M35 70 Q50 65 65 70" stroke="white" stroke-width="3" fill="none" />
+                    </svg>
+                    <div>
+                        <div class="font-orbitron text-blue-400 tracking-tighter font-bold text-xl leading-none">SPACE QUEST</div>
+                        <div class="text-[8px] text-blue-300/50 uppercase tracking-[0.2em]">Hệ thống thám hiểm tri thức</div>
+                    </div>
                 </div>
             </div>
             
@@ -118,6 +147,34 @@
             
             <!-- HOME SCREEN -->
             <div id="home-screen" class="h-full flex flex-col items-center justify-center space-y-6 fade-in">
+                
+                <!-- Large Animated Icon -->
+                <div class="mb-2">
+                    <svg width="120" height="120" viewBox="0 0 100 100" class="icon-glow">
+                        <defs>
+                            <linearGradient id="mainG" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#38bdf8;stop-opacity:1" />
+                                <stop offset="100%" style="stop-color:#c084fc;stop-opacity:1" />
+                            </linearGradient>
+                            <filter id="shadow">
+                                <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.3"/>
+                            </filter>
+                        </defs>
+                        <!-- Background Circle -->
+                        <circle cx="50" cy="50" r="48" fill="url(#mainG)" />
+                        <!-- Knowledge Book Base -->
+                        <path d="M25 65 Q50 55 75 65 L75 75 Q50 65 25 75 Z" fill="white" opacity="0.9" />
+                        <path d="M25 65 L25 75 M50 60 L50 70 M75 65 L75 75" stroke="rgba(0,0,0,0.1)" stroke-width="1" />
+                        <!-- Rocket Knowledge Pencil -->
+                        <path d="M50 20 L62 50 L38 50 Z" fill="white" filter="url(#shadow)" />
+                        <rect x="44" y="50" width="12" height="12" fill="white" filter="url(#shadow)" />
+                        <path d="M40 55 L35 62 L40 62 Z" fill="#38bdf8" />
+                        <path d="M60 55 L65 62 L60 62 Z" fill="#38bdf8" />
+                        <!-- Exhaust Flame -->
+                        <path d="M46 65 Q50 85 54 65" fill="#fbbf24" />
+                    </svg>
+                </div>
+
                 <div class="text-center">
                     <h1 class="text-5xl font-orbitron font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-500 mb-2">TRI THỨC VŨ TRỤ</h1>
                     <p class="text-blue-200/50 tracking-[0.3em] uppercase text-xs">Phi hành đoàn lớp 4 & 5</p>
