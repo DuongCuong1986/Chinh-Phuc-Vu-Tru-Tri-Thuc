@@ -1,0 +1,295 @@
+﻿<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chinh Phục Vũ Trụ Tri Thức - Lớp 4 & 5</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --space-bg: #0f172a;
+            --neon-blue: #38bdf8;
+            --neon-purple: #c084fc;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--space-bg);
+            color: white;
+            overflow: hidden;
+            user-select: none;
+        }
+        .font-orbitron { font-family: 'Orbitron', sans-serif; }
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .neon-shadow {
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.5);
+        }
+        .progress-bar {
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        @keyframes pulse-slow {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.6; }
+        }
+        .stars-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body class="h-screen flex items-center justify-center p-4">
+
+    <div class="stars-bg"></div>
+
+    <!-- Main Game Container -->
+    <div id="game-container" class="w-full max-w-4xl h-[600px] glass-panel rounded-3xl overflow-hidden relative flex flex-col shadow-2xl border-2 border-blue-500/30">
+        
+        <!-- Top HUD -->
+        <div class="p-4 border-b border-white/10 flex justify-between items-center bg-slate-900/50">
+            <div class="flex items-center gap-3">
+                <div id="back-home" class="cursor-pointer hover:text-blue-400 hidden" onclick="showHomeScreen()">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <div class="font-orbitron text-blue-400 tracking-wider font-bold">SPACE QUEST</div>
+            </div>
+            
+            <div class="flex gap-6 items-center">
+                <div class="text-right">
+                    <div class="text-xs text-gray-400 uppercase">Cấp độ</div>
+                    <div id="player-level" class="font-orbitron text-purple-400">LVL 01</div>
+                </div>
+                <div class="w-32 h-3 bg-gray-700 rounded-full overflow-hidden border border-white/10">
+                    <div id="xp-bar" class="progress-bar h-full bg-gradient-to-r from-blue-500 to-purple-500" style="width: 0%"></div>
+                </div>
+                <div class="text-right">
+                    <div class="text-xs text-gray-400 uppercase">Điểm XP</div>
+                    <div id="player-xp" class="font-orbitron text-yellow-400">0000</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Screens Area -->
+        <div class="flex-1 relative overflow-hidden p-6">
+            
+            <!-- Home Screen -->
+            <div id="home-screen" class="h-full flex flex-col items-center justify-center space-y-8">
+                <div class="text-center">
+                    <h1 class="text-5xl font-orbitron font-bold bg-clip-text text-transparent bg-gradient-to-b from-white to-blue-400 mb-2">CHINH PHỤC VŨ TRỤ</h1>
+                    <p class="text-blue-200/60 tracking-widest uppercase text-sm">Chương trình học lớp 4 & 5</p>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4 w-full max-w-2xl">
+                    <button onclick="startMission('math')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-blue-500/10 transition-all text-left">
+                        <div class="text-3xl mb-2">📐</div>
+                        <div class="font-bold text-lg text-blue-300">Toán Học</div>
+                        <div class="text-xs text-gray-400">Phân số, số thập phân, hình học</div>
+                        <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">🚀</div>
+                    </button>
+                    <button onclick="startMission('science')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-green-500/10 transition-all text-left">
+                        <div class="text-3xl mb-2">🔬</div>
+                        <div class="font-bold text-lg text-green-300">Khoa Học</div>
+                        <div class="text-xs text-gray-400">Năng lượng, cơ thể người, thực vật</div>
+                        <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">☄️</div>
+                    </button>
+                    <button onclick="startMission('history')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-orange-500/10 transition-all text-left">
+                        <div class="text-3xl mb-2">🏺</div>
+                        <div class="font-bold text-lg text-orange-300">Sử - Địa</div>
+                        <div class="text-xs text-gray-400">Lịch sử hào hùng, địa lý thế giới</div>
+                        <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">🌍</div>
+                    </button>
+                    <button onclick="startMission('language')" class="group relative p-6 rounded-2xl border border-white/10 bg-white/5 hover:bg-purple-500/10 transition-all text-left">
+                        <div class="text-3xl mb-2">✍️</div>
+                        <div class="font-bold text-lg text-purple-300">Tiếng Việt</div>
+                        <div class="text-xs text-gray-400">Từ vựng, ngữ pháp, thành ngữ</div>
+                        <div class="absolute bottom-4 right-4 opacity-0 group-hover:opacity-100 transition-opacity">📜</div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Quiz Screen -->
+            <div id="quiz-screen" class="hidden h-full flex flex-col">
+                <div class="flex justify-between items-center mb-6">
+                    <span id="mission-title" class="px-4 py-1 rounded-full border border-blue-500/50 text-blue-400 text-xs font-bold uppercase tracking-widest bg-blue-500/10">MISSION: MATH</span>
+                    <div class="flex items-center gap-2 text-red-400 font-orbitron">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+                        </svg>
+                        <span id="lives">3</span>
+                    </div>
+                </div>
+
+                <div class="flex-1 flex flex-col items-center justify-center space-y-8">
+                    <div id="question-box" class="text-2xl font-bold text-center max-w-2xl leading-relaxed"></div>
+                    
+                    <div id="options-grid" class="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-xl">
+                        <!-- Buttons injected here -->
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Feedback Overlay -->
+        <div id="feedback-overlay" class="hidden absolute inset-0 z-50 bg-slate-950/90 flex flex-col items-center justify-center p-8 animate-in fade-in zoom-in">
+            <div id="fb-icon" class="text-7xl mb-4">✨</div>
+            <h2 id="fb-title" class="text-4xl font-orbitron font-bold mb-2">CHÍNH XÁC!</h2>
+            <p id="fb-msg" class="text-gray-400 mb-6">+50 XP</p>
+            <button id="next-btn" class="px-10 py-3 bg-blue-600 hover:bg-blue-500 rounded-xl font-bold transition-all transform hover:scale-105 active:scale-95">TIẾP TỤC</button>
+        </div>
+
+    </div>
+
+    <!-- Script Area -->
+    <script>
+        const missions = {
+            math: [
+                { q: "Tính diện tích hình bình hành có độ dài đáy 12cm và chiều cao 8cm?", a: ["96 cm²", "48 cm²", "20 cm²", "84 cm²"], c: 0 },
+                { q: "Trong các phân số sau, phân số nào bằng 3/4?", a: ["6/10", "9/12", "12/20", "4/3"], c: 1 },
+                { q: "Tính: 0,25 x 100 = ?", a: ["2,5", "250", "25", "0,025"], c: 2 },
+                { q: "Một hình lập phương có cạnh 2dm. Thể tích của nó là:", a: ["4 dm³", "8 dm³", "6 dm³", "12 dm³"], c: 1 }
+            ],
+            science: [
+                { q: "Thành phần nào trong không khí duy trì sự cháy?", a: ["Ni-tơ", "Khí Các-bô-níc", "Khí Ô-xy", "Hơi nước"], c: 2 },
+                { q: "Năng lượng mặt trời được dùng để làm gì?", a: ["Chiếu sáng", "Phát điện", "Làm khô", "Tất cả các ý trên"], c: 3 },
+                { q: "Cơ quan nào có chức năng lọc máu trong cơ thể người?", a: ["Gan", "Thận", "Tim", "Phổi"], c: 1 }
+            ],
+            history: [
+                { q: "Ai là người chỉ huy chiến dịch Điện Biên Phủ năm 1954?", a: ["Võ Nguyên Giáp", "Hồ Chí Minh", "Trần Hưng Đạo", "Phạm Văn Đồng"], c: 0 },
+                { q: "Quốc gia nào có diện tích lớn nhất thế giới?", a: ["Trung Quốc", "Hoa Kỳ", "Nga", "Canada"], c: 2 },
+                { q: "Sông nào là con sông dài nhất miền Bắc nước ta?", a: ["Sông Đà", "Sông Hồng", "Sông Thái Bình", "Sông Cầu"], c: 1 }
+            ],
+            language: [
+                { q: "Tìm từ trái nghĩa với từ 'Dũng cảm'?", a: ["Gan dạ", "Hèn nhát", "Thông minh", "Lười biếng"], c: 1 },
+                { q: "Câu 'Mặt trời tỏa ánh nắng rực rỡ' thuộc kiểu câu gì?", a: ["Ai làm gì?", "Ai thế nào?", "Ai là gì?", "Cái gì thế nào?"], c: 1 },
+                { q: "Thành ngữ 'Học đi đôi với hành' khuyên chúng ta điều gì?", a: ["Phải chăm học", "Học phải áp dụng", "Học nhiều môn", "Chỉ cần làm bài"], c: 1 }
+            ]
+        };
+
+        let currentXP = 0;
+        let currentLevel = 1;
+        let lives = 3;
+        let currentMission = [];
+        let questionIndex = 0;
+        let missionKey = '';
+
+        function updateHUD() {
+            document.getElementById('player-xp').innerText = String(currentXP).padStart(4, '0');
+            document.getElementById('player-level').innerText = `LVL ${String(currentLevel).padStart(2, '0')}`;
+            document.getElementById('lives').innerText = lives;
+            
+            const xpToNextLevel = currentLevel * 500;
+            const progress = (currentXP % 500) / 5;
+            document.getElementById('xp-bar').style.width = `${progress}%`;
+        }
+
+        function showHomeScreen() {
+            document.getElementById('home-screen').classList.remove('hidden');
+            document.getElementById('quiz-screen').classList.add('hidden');
+            document.getElementById('back-home').classList.add('hidden');
+            document.getElementById('feedback-overlay').classList.add('hidden');
+        }
+
+        function startMission(key) {
+            missionKey = key;
+            currentMission = [...missions[key]].sort(() => Math.random() - 0.5);
+            questionIndex = 0;
+            lives = 3;
+            
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('quiz-screen').classList.remove('hidden');
+            document.getElementById('back-home').classList.remove('hidden');
+            document.getElementById('mission-title').innerText = `MISSION: ${key.toUpperCase()}`;
+            
+            updateHUD();
+            showQuestion();
+        }
+
+        function showQuestion() {
+            if (questionIndex >= currentMission.length) {
+                showFinalFeedback();
+                return;
+            }
+
+            const qData = currentMission[questionIndex];
+            const qBox = document.getElementById('question-box');
+            const oGrid = document.getElementById('options-grid');
+            
+            qBox.innerText = qData.q;
+            oGrid.innerHTML = '';
+            
+            qData.a.forEach((opt, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "p-4 rounded-xl border border-white/10 bg-white/5 hover:border-blue-500/50 hover:bg-blue-500/10 transition-all text-left flex items-center gap-4 group";
+                btn.innerHTML = `
+                    <span class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center font-bold text-sm group-hover:bg-blue-500/50">${String.fromCharCode(65 + idx)}</span>
+                    <span class="flex-1">${opt}</span>
+                `;
+                btn.onclick = () => checkAnswer(idx);
+                oGrid.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(idx) {
+            const correct = currentMission[questionIndex].c;
+            const overlay = document.getElementById('feedback-overlay');
+            const title = document.getElementById('fb-title');
+            const msg = document.getElementById('fb-msg');
+            const icon = document.getElementById('fb-icon');
+
+            if (idx === correct) {
+                currentXP += 100;
+                title.innerText = "CHÍNH XÁC!";
+                title.className = "text-4xl font-orbitron font-bold mb-2 text-green-400";
+                msg.innerText = "+100 XP";
+                icon.innerText = "⚡";
+                if (currentXP >= currentLevel * 500) {
+                    currentLevel++;
+                    msg.innerText += " - LÊN CẤP!";
+                }
+            } else {
+                lives--;
+                title.innerText = "SAI MẤT RỒI!";
+                title.className = "text-4xl font-orbitron font-bold mb-2 text-red-500";
+                msg.innerText = "Bé hãy cẩn thận hơn nhé.";
+                icon.innerText = "⚠️";
+                if (lives <= 0) {
+                    msg.innerText = "Hết năng lượng rồi! Thử lại sau nhé.";
+                    document.getElementById('next-btn').onclick = showHomeScreen;
+                }
+            }
+
+            updateHUD();
+            overlay.classList.remove('hidden');
+            document.getElementById('next-btn').onclick = () => {
+                overlay.classList.add('hidden');
+                if (lives > 0) {
+                    questionIndex++;
+                    showQuestion();
+                } else {
+                    showHomeScreen();
+                }
+            };
+        }
+
+        function showFinalFeedback() {
+            const overlay = document.getElementById('feedback-overlay');
+            document.getElementById('fb-title').innerText = "HOÀN THÀNH!";
+            document.getElementById('fb-msg').innerText = "Nhiệm vụ đã hoàn tất. Bé thật xuất sắc!";
+            document.getElementById('fb-icon').innerText = "🏆";
+            document.getElementById('next-btn').onclick = showHomeScreen;
+            overlay.classList.remove('hidden');
+        }
+
+        // Initialize HUD
+        updateHUD();
+    </script>
+</body>
+</html>
